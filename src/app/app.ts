@@ -6,7 +6,7 @@ import { Draw } from "./draw/draw";
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Articles, Draw],
-  templateUrl: './app.html',
+  template: `<router-outlet />`,
   styleUrl: './app.css'
 })
 export class App {
