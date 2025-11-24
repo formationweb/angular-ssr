@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, REQUEST, RESPONSE_INIT, signal } from '@angular/core';
 import { Article, ArticlesService } from './articles.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -9,8 +9,18 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './articles.css',
 })
 export class Articles {
+  private request = inject(REQUEST)
+  private responseInit = inject(RESPONSE_INIT)
   private articlesService = inject(ArticlesService)
   readonly articles = toSignal(this.articlesService.getArticles(), {
     initialValue: []
   })
+
+  constructor() {
+    if (this.responseInit) {
+      this.responseInit.headers = {
+        'Cache-Control': 'max-age=7200'
+      }
+    }
+  }
 }
