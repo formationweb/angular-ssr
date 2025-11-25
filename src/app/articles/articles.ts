@@ -15,6 +15,7 @@ interface Request {
 })
 export class Articles {
   private request = inject(REQUEST)
+  private requestContext = inject(REQUEST_CONTEXT)
   private pendingTasks = inject(PendingTasks)
   private responseInit = inject(RESPONSE_INIT)
   private articlesService = inject(ArticlesService)
@@ -26,6 +27,7 @@ export class Articles {
   isUserConnected = signal(false)
 
   constructor() {
+    console.log(this.requestContext)
     if (this.responseInit) {
       this.responseInit.headers = {
         'Cache-Control': 'max-age=7200'

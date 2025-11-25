@@ -19,7 +19,9 @@ app.use(antiBot)
 
 app.use(async (req, res, next) => {
   try {
-    const angularRes = await angularApp.handle(req)
+    const angularRes = await angularApp.handle(req, {
+      userRole: 'admin'
+    })
     if (angularRes) {
       await writeResponseToNodeResponse(angularRes, res)
     }
