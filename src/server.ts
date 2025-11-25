@@ -1,15 +1,21 @@
 import { join } from 'node:path';
 import express from 'express'
 import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResponse } from '@angular/ssr/node';
+import { antiBot } from './server/middlewares/antibot';
+import cors from 'cors'
  
 const app = express()
 const angularApp = new AngularNodeAppEngine()
 
 const browserDistFolder = join(import.meta.dirname, '/../browser')
 
+app.use(cors())
+
 app.use(
   express.static(browserDistFolder)
 )
+
+app.use(antiBot)
 
 app.use(async (req, res, next) => {
   try {

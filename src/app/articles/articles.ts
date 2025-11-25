@@ -1,7 +1,11 @@
-import { Component, inject, PendingTasks, REQUEST, RESPONSE_INIT, signal } from '@angular/core';
+import { Component, inject, PendingTasks, REQUEST, REQUEST_CONTEXT, RESPONSE_INIT, signal } from '@angular/core';
 import { Article, ArticlesService } from './articles.service';
 import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
 import { delay } from 'rxjs';
+
+interface Request {
+  abTest: string
+}
 
 @Component({
   selector: 'app-articles',
