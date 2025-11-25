@@ -1,1 +1,11 @@
-<p>article works!</p>
+@if (isBrowser) {
+    <div>
+        <p>Navigateur</p>
+        <p>Test</p>
+        <button (click)="test()">test</button>
+    </div>
+}
+@else {
+    <h1>Serveur</h1>
+    <button (click)="test()">test</button>
+}

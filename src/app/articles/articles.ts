@@ -15,6 +15,7 @@ export class Articles {
   readonly articles = toSignal(this.articlesService.getArticles(), {
     initialValue: []
   })
+  isUserConnected = signal(false)
 
   constructor() {
     if (this.responseInit) {

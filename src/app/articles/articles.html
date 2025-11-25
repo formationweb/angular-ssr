@@ -3,3 +3,13 @@
         <h1>{{ article.title }}</h1>
     </div>
 }
+
+@defer (on viewport ; hydrate when isUserConnected()) {
+    <div>
+        <hr />
+        <h1>Commentaires</h1>
+    </div>
+}
+@placeholder { 
+    <p>Affichage placeholder</p>
+}

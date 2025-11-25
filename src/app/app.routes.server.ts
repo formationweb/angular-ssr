@@ -13,16 +13,16 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'article/:id',
-    renderMode: RenderMode.Prerender,
-    async getPrerenderParams() {
-      const articlesService = inject(ArticlesService)
-      const articles = await lastValueFrom(articlesService.getArticles())
-      return articles.map(article => {
-        return {
-          id: ''+article.id
-        }
-      })
-    }
+    renderMode: RenderMode.Server,
+    // async getPrerenderParams() {
+    //   const articlesService = inject(ArticlesService)
+    //   const articles = await lastValueFrom(articlesService.getArticles())
+    //   return articles.map(article => {
+    //     return {
+    //       id: ''+article.id
+    //     }
+    //   })
+    // }
   },
   {
     path: '404',

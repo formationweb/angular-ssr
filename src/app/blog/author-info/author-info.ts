@@ -1,4 +1,5 @@
-import { Component, inject, REQUEST, signal } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Component, inject, PLATFORM_ID, REQUEST, signal } from '@angular/core';
 
 @Component({
   selector: 'app-author-info',
