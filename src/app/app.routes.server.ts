@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { RenderMode, ServerRoute } from '@angular/ssr';
+import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
 import { lastValueFrom } from 'rxjs';
 import { ArticlesService } from './articles/articles.service';
 
@@ -28,6 +28,25 @@ export const serverRoutes: ServerRoute[] = [
     path: '404',
     renderMode: RenderMode.Server,
     status: 404
+  },
+  {
+    path: 'blog/summary',
+    renderMode: RenderMode.Prerender,
+    headers: {
+      'Cache-Control': 'max-age=3600'
+    }
+  },
+  {
+    path: 'blog/trending/:id',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'blog/author-info',
+    renderMode: RenderMode.Server
+  },
+  {
+    path: 'blog/live-feed',
+    renderMode: RenderMode.Prerender
   },
   {
     path: '**',
