@@ -1,11 +1,23 @@
-@if (isBrowser) {
-    <div>
-        <p>Navigateur</p>
-        <p>Test</p>
-        <button (click)="test()">test</button>
-    </div>
+@defer (hydrate never) {
+    <app-content />
 }
-@else {
-    <h1>Serveur</h1>
-    <button (click)="test()">test</button>
+
+@defer (hydrate on interaction) {
+    <app-share-widget />
 }
+
+@defer (hydrate on viewport) {
+    <app-related-articles />
+}
+
+@defer (on viewport ; hydrate on interaction) {
+    <app-comments />
+}
+@placeholder {
+    <p>---</p>
+}
+
+@defer (hydrate on viewport) {
+    <app-newsletter />
+}
+

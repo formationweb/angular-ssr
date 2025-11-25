@@ -1,6 +1,7 @@
-import { Component, inject, REQUEST, RESPONSE_INIT, signal } from '@angular/core';
+import { Component, inject, PendingTasks, REQUEST, RESPONSE_INIT, signal } from '@angular/core';
 import { Article, ArticlesService } from './articles.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-articles',
@@ -12,9 +13,7 @@ export class Articles {
   private request = inject(REQUEST)
   private responseInit = inject(RESPONSE_INIT)
   private articlesService = inject(ArticlesService)
-  readonly articles = toSignal(this.articlesService.getArticles(), {
-    initialValue: []
-  })
+  readonly articles = toSignal(this.articlesService.getArticles())
   isUserConnected = signal(false)
 
   constructor() {
@@ -23,5 +22,6 @@ export class Articles {
         'Cache-Control': 'max-age=7200'
       }
     }
+    
   }
 }
