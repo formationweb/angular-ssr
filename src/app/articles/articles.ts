@@ -11,9 +11,14 @@ import { delay } from 'rxjs';
 })
 export class Articles {
   private request = inject(REQUEST)
+  private pendingTasks = inject(PendingTasks)
   private responseInit = inject(RESPONSE_INIT)
   private articlesService = inject(ArticlesService)
-  readonly articles = toSignal(this.articlesService.getArticles())
+  readonly articles = toSignal(this.articlesService.getArticles().pipe(
+    pendingUntilEvent()
+  ), {
+    initialValue: []
+  })
   isUserConnected = signal(false)
 
   constructor() {
@@ -22,6 +27,14 @@ export class Articles {
         'Cache-Control': 'max-age=7200'
       }
     }
+    // this.pendingTasks.run(() => {
+    //   return new Promise((resolve) => {
+    //     setTimeout(() => {
+    //       console.log('test')
+    //       resolve(true)
+    //     }, 10000)
+    //   })
+    // })
     
   }
 }
