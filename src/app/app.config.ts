@@ -10,6 +10,7 @@ import {
 } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 import { IndexedDbService } from './core/indexeddb';
+import { RxDbService } from './core/rxdbservice';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,8 +23,8 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     provideAppInitializer(() => {
-      const indexedService = inject(IndexedDbService)
-      return indexedService.init(['articles'])
+      const indexedService = inject(RxDbService)
+      return indexedService.init()
     })
   ],
 };
