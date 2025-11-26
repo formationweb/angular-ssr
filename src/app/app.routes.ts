@@ -7,6 +7,7 @@ import { Summary } from './blog/summary/summary';
 import { Trending } from './blog/trending/trending';
 import { AuthorInfo } from './blog/author-info/author-info';
 import { LiveFeed } from './blog/live-feed/live-feed';
+import { Group } from './abgroup/group/group';
 
 export const routes: Routes = [{
     path: '',
@@ -30,4 +31,7 @@ export const routes: Routes = [{
 }, {
     path: 'blog/live-feed',
     component:LiveFeed
+}, {
+    path: 'abgroup',
+    component: Group
 }];

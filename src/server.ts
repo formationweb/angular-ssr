@@ -3,6 +3,7 @@ import express from 'express'
 import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResponse } from '@angular/ssr/node';
 import { antiBot } from './server/middlewares/antibot';
 import cors from 'cors'
+import { abGroupMiddleware } from './server/middlewares/ab-group';
  
 const app = express()
 const angularApp = new AngularNodeAppEngine()
@@ -19,9 +20,7 @@ app.use(antiBot)
 
 app.use(async (req, res, next) => {
   try {
-    const angularRes = await angularApp.handle(req, {
-      userRole: 'admin'
-    })
+    const angularRes = await angularApp.handle(req, abGroupMiddleware(req, res, next))
     if (angularRes) {
       await writeResponseToNodeResponse(angularRes, res)
     }
