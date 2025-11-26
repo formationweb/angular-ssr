@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -6,7 +7,6 @@ import { Injectable } from '@angular/core';
 export class IndexedDbService {
     private readonly dbName = 'myapp-db'
     private db: IDBDatabase | null = null 
-    private isDbInit = false
 
     init(storeNames: string[]): Promise<boolean> {
         if (!this.isAvailable()) {
@@ -32,7 +32,6 @@ export class IndexedDbService {
 
             request.onsuccess = () => {
                 this.db = request.result
-                this.isDbInit = true
                 resolve(true)
             }
         })
@@ -43,6 +42,54 @@ export class IndexedDbService {
     }
 
     isReady() {
-        return this.isDbInit
+        return !!this.db
+    }
+
+    setItems<T>(storeName: string, items: T[]): Observable<T[]> {
+        if (!this.isAvailable) {
+            return of([])
+        }
+        return new Observable((subscriber) => {
+            if (!this.db) {
+                return 
+            }
+            const tx = this.db.transaction([storeName], 'readwrite');
+            const store = tx.objectStore(storeName);
+          
+            items.forEach(item => store.put(item));
+          
+            tx.oncomplete = () => {
+                subscriber.next(items)
+                subscriber.complete()
+            };
+          
+            tx.onerror = () => {
+                subscriber.error(tx.error)
+            };  
+        })
+    }
+
+    getItems<T>(storeName: string): Observable<T[]> {
+        if (!this.isAvailable) {
+            return of([])
+        }
+        return new Observable((subscriber) => {
+            if (!this.db) {
+                return 
+            }
+            const tx = this.db.transaction([storeName], 'readonly');
+            const store = tx.objectStore(storeName);
+
+            const getAllRequest = store.getAll();
+
+            getAllRequest.onsuccess = () => {
+                subscriber.next(getAllRequest.result)
+                subscriber.complete()
+            };
+
+            getAllRequest.onerror = () => {
+                subscriber.error(getAllRequest.error)
+            };
+        })
     }
 }
