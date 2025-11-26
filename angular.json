@@ -75,6 +75,32 @@
           "builder": "@angular/build:unit-test"
         }
       }
+    },
+    "my-indexed-database": {
+      "projectType": "library",
+      "root": "projects/database",
+      "sourceRoot": "projects/database/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/database/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/database/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/database/tsconfig.spec.json"
+          }
+        }
+      }
     }
   }
 }

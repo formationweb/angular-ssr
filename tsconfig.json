@@ -3,6 +3,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "my-indexed-database": [
+        "./dist/database"
+      ]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -28,6 +33,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/database/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/database/tsconfig.spec.json"
     }
   ]
 }

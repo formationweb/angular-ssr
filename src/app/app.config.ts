@@ -9,7 +9,6 @@ import {
   withIncrementalHydration,
 } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
-import { IndexedDbService } from './core/indexeddb';
 import { RxDbService } from './core/rxdbservice';
 
 export const appConfig: ApplicationConfig = {

@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
     providedIn: 'root'
 })
 export class IndexedDbService {
-    private readonly dbName = 'myapp-db'
+    private readonly dbName = 'myapp-dba'
     private db: IDBDatabase | null = null 
 
     init(storeNames: string[]): Promise<boolean> {

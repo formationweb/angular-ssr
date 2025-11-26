@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, from, map, Observable, switchMap } from 'rxjs';
-import { IndexedDbService } from '../core/indexeddb';
+import { IndexedDbService } from 'my-indexed-database';
 import { RxDbService } from '../core/rxdbservice';
 
 export interface Article {
