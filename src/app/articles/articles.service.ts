@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Observable, switchMap } from 'rxjs';
+import { catchError, from, map, Observable, switchMap } from 'rxjs';
 import { IndexedDbService } from '../core/indexeddb';
 import { RxDbService } from '../core/rxdbservice';
 
@@ -33,6 +33,16 @@ export class ArticlesService {
   // }
 
   getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.url)
+    // return this.http.get<Article[]>(this.url).pipe(
+    //   switchMap((articles) => {
+    //     return from(this.rxDb!.collectionArticles.bulkInsert(articles)).pipe(
+    //       map(() => articles)
+    //     )
+    //   }),
+    //   catchError(() => {
+    //     return this.rxDb!.collectionArticles.find().$
+    //   })
+    // )
+    return this.rxDb!.collectionArticles.find().$
   }
 }

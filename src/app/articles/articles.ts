@@ -28,6 +28,8 @@ export class Articles {
 
   constructor() {
     console.log(this.requestContext)
+
+
     if (this.responseInit) {
       this.responseInit.headers = {
         'Cache-Control': 'max-age=7200'

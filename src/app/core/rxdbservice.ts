@@ -1,7 +1,10 @@
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
-import { createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
+import { addRxPlugin, createRxDatabase, RxCollection, RxDatabase } from 'rxdb';
 import { Injectable } from "@angular/core";
 import { Article } from '../articles/articles.service';
+import { RxDBMigrationSchemaPlugin } from 'rxdb/plugins/migration-schema';
+
+addRxPlugin(RxDBMigrationSchemaPlugin);
 
 type Database = RxDatabase<{
     articles: RxCollection<Article>
@@ -53,5 +56,9 @@ export class RxDbService {
 
     isAvailable() {
         return typeof indexedDB !== 'undefined'
+    }
+
+    get collectionArticles() {
+        return this.db!.collections.articles
     }
 }
