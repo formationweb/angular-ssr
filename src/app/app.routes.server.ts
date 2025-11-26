@@ -6,7 +6,7 @@ import { ArticlesService } from './articles/articles.service';
 export const serverRoutes: ServerRoute[] = [
   {
     path: '',
-    renderMode: RenderMode.Server,
+    renderMode: RenderMode.Client,
     // headers: {
     //   'Cache-Control': 'max-age=3600'
     // }
