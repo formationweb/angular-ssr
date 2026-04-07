@@ -1,5 +1,6 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Articles, ArticlesService } from './articles.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-articles',
@@ -9,11 +10,5 @@ import { Articles, ArticlesService } from './articles.service';
 })
 export class ArticlesComponent {
   private articlesService = inject(ArticlesService)
-  articles = signal<Articles[]>([])
-  
-  constructor() {
-    this.articlesService.getAll().subscribe((articles) => {
-      this.articles.set(articles)
-    })
-  }
+  articles = toSignal(this.articlesService.getAll())
 }
