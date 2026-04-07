@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { from, Observable } from "rxjs";
 
 export interface Articles {
     userId: number
@@ -18,5 +18,9 @@ export class ArticlesService {
 
     getAll(): Observable<Articles[]> {
         return this.http.get<Articles[]>(this.url)
+    }
+
+    getFetchAll(): Observable<Articles[]> {
+        return  from(fetch('https://jsonplaceholder.typicode.com/posts').then((res) => res.json()))
     }
 }

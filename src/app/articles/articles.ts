@@ -1,6 +1,9 @@
-import { Component, computed, effect, inject, REQUEST, RESPONSE_INIT, signal } from '@angular/core';
+import { Component, computed, effect, inject, makeStateKey, PendingTasks, PLATFORM_ID, REQUEST, RESPONSE_INIT, signal, TransferState } from '@angular/core';
 import { Articles, ArticlesService } from './articles.service';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
+import { isPlatformBrowser } from '@angular/common';
+
+const ARTICLES_KEY = makeStateKey<Articles[]>('articles')
 
 @Component({
   selector: 'app-articles',
@@ -9,17 +12,50 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './articles.css',
 })
 export class ArticlesComponent {
+  private platformId = inject(PLATFORM_ID)
   private articlesService = inject(ArticlesService)
-  private request = inject(REQUEST)
-  private responseInit = inject(RESPONSE_INIT)
-  articles = toSignal(this.articlesService.getAll())
+  // private request = inject(REQUEST)
+  // private responseInit = inject(RESPONSE_INIT)
+  private pendingTasks = inject(PendingTasks)
+  private transferState = inject(TransferState)
+
+  // Pending Tasks
+  // articles = toSignal(this.articlesService.getFetchAll().pipe(
+  //   pendingUntilEvent()
+  // ))
+
+  articles = signal<Articles[]>([])
 
   constructor() {
-    console.log(this.request)
-    if (this.responseInit) {
-      this.responseInit.headers = {
-        'Cache-Control': 'max-age=3600'
+    const cached = this.transferState.get(ARTICLES_KEY, null)
+
+    if (cached) {
+      this.articles.set(cached)
+      if (isPlatformBrowser(this.platformId)) {
+        this.transferState.remove(ARTICLES_KEY)
       }
+      return
     }
+
+    this.pendingTasks.run(async () => {
+        const data = await fetch('https://jsonplaceholder.typicode.com/posts')
+          .then((res) => res.json())
+         this.articles.set(data)
+         this.transferState.set(ARTICLES_KEY, data)
+    })
+
+    //this.transferState.set(ARTICLES_KEY, 'toto')
+    // console.log(this.request)
+    // if (this.responseInit) {
+    //   this.responseInit.headers = {
+    //     'Cache-Control': 'max-age=3600'
+    //   }
+    // }
+    // this.pendingTasks.run(async () => {
+    //    await fetch('https://jsonplaceholder.typicode.com/posts')
+    //     .then((res) => res.json())
+    //     .then(data => this.articles.set(data))
+    // })
+   
   }
 }

@@ -37,7 +37,7 @@ export const serverRoutes: ServerRoute[] = [
       'X-Robots-Tag': 'noindex,nofollow'
     }
   },
-   {
+  /* {
     path: 'profile',
     renderMode: RenderMode.Server,
     headers: {
@@ -60,7 +60,7 @@ export const serverRoutes: ServerRoute[] = [
     headers: {
       'Cache-Control': 'max-age=3600'
     }
-  },
+  },*/
   {
     path: '**',
     renderMode: RenderMode.Server
