@@ -1,3 +1,4 @@
+import { RenderMode } from '@angular/ssr';
 import { Routes } from '@angular/router';
 import { ArticlesComponent } from './articles/articles';
 import { Draw } from './draw/draw';
@@ -8,10 +9,14 @@ import { NotFound } from './not-found/not-found';
 export const routes: Routes = [
   {
     path: '',
-    component: ArticlesComponent,
+    component: ArticlesComponent
   },
   {
     path: 'article/:id',
+    component: Article,
+  },
+   {
+    path: 'article/:id/comment',
     component: Article,
   },
   {

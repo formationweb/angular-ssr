@@ -6,7 +6,10 @@ import { lastValueFrom } from 'rxjs';
 export const serverRoutes: ServerRoute[] = [
   {
     path: '',
-    renderMode: RenderMode.Server
+    renderMode: RenderMode.Prerender,
+    headers: {
+      'Cache-Control': 'public,max-age=3600'
+    }
   },
   {
     path: 'draw',
@@ -25,6 +28,30 @@ export const serverRoutes: ServerRoute[] = [
       })
     },
     fallback: PrerenderFallback.Server
+  },
+   {
+    path: 'article/:id/comment',
+    renderMode: RenderMode.Client,
+    headers: {
+      'Cache-Control': 'no-store',
+      'X-Robots-Tag': 'noindex,nofollow'
+    }
+  },
+   {
+    path: 'profile',
+    renderMode: RenderMode.Server,
+    headers: {
+      'Cache-Control': 'no-store',
+      'Vary': 'Cookie,Authorization'
+    }
+  },
+  {
+    path: 'search',
+    renderMode: RenderMode.Client
+  },
+  {
+    path: 'top-posts',
+    renderMode: RenderMode.Server
   },
   {
     path: '404',
