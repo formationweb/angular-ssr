@@ -3,3 +3,10 @@
         {{ article.title }}
     </div>
 }
+
+@defer (on hover ; hydrate never) {
+   <button (click)="test()">Test</button>
+}
+@placeholder {
+    <p>...</p>
+}

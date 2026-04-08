@@ -1,1 +1,29 @@
-<p>article works!</p>
+<!-- ArticleContent -->
+@defer (hydrate never) {
+    <app-example />
+}
+
+<!-- SharedWidget -->
+@defer (hydrate on interaction) {
+    <app-example />
+}
+
+<!-- RelatedArticles -->
+@defer (hydrate on viewport) {
+    <app-example />
+}
+
+<!-- Comments -->
+@defer (on viewport; hydrate on interaction) {
+    <app-example />
+}
+@placeholder {
+    <p>...</p>
+}
+
+<!-- NewsletterSignup -->
+@defer (hydrate on viewport) {
+    <app-example />
+}
+
+

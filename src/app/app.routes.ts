@@ -5,11 +5,16 @@ import { Draw } from './draw/draw';
 import { authGuard } from './core/auth.guard';
 import { Article } from './article/article';
 import { NotFound } from './not-found/not-found';
+import { Example } from './test';
 
 export const routes: Routes = [
   {
     path: '',
     component: ArticlesComponent
+  },
+   {
+    path: 'test',
+    component: Example
   },
   {
     path: 'article/:id',

@@ -6,7 +6,7 @@ import { lastValueFrom } from 'rxjs';
 export const serverRoutes: ServerRoute[] = [
   {
     path: '',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Server,
     headers: {
       'Cache-Control': 'public,max-age=3600'
     }
@@ -14,6 +14,10 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: 'draw',
     renderMode: RenderMode.Prerender
+  },
+  {
+    path: 'test',
+    renderMode: RenderMode.Server
   },
   {
     path: 'article/:id',

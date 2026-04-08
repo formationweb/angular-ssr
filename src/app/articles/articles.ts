@@ -2,12 +2,13 @@ import { Component, computed, effect, inject, makeStateKey, PendingTasks, PLATFO
 import { Articles, ArticlesService } from './articles.service';
 import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
 import { isPlatformBrowser } from '@angular/common';
+import { Example } from "../test";
 
 const ARTICLES_KEY = makeStateKey<Articles[]>('articles')
 
 @Component({
   selector: 'app-articles',
-  imports: [],
+  imports: [Example],
   templateUrl: './articles.html',
   styleUrl: './articles.css',
 })
@@ -18,15 +19,20 @@ export class ArticlesComponent {
   // private responseInit = inject(RESPONSE_INIT)
   private pendingTasks = inject(PendingTasks)
   private transferState = inject(TransferState)
+  
+  articles = toSignal(this.articlesService.getFetchAll().pipe(
+    pendingUntilEvent()
+  ))
 
-  // Pending Tasks
-  // articles = toSignal(this.articlesService.getFetchAll().pipe(
-  //   pendingUntilEvent()
-  // ))
+  test() {
+    console.log('test')
+  }
 
-  articles = signal<Articles[]>([])
+  isAdmin = signal(false)
 
-  constructor() {
+  //articles = signal<Articles[]>([])
+
+ /* constructor() {
     const cached = this.transferState.get(ARTICLES_KEY, null)
 
     if (cached) {
@@ -57,5 +63,5 @@ export class ArticlesComponent {
     //     .then(data => this.articles.set(data))
     // })
    
-  }
+  }*/
 }
