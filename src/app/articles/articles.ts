@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, makeStateKey, PendingTasks, PLATFORM_ID, REQUEST, RESPONSE_INIT, signal, TransferState } from '@angular/core';
+import { Component, computed, effect, inject, makeStateKey, PendingTasks, PLATFORM_ID, REQUEST, REQUEST_CONTEXT, RESPONSE_INIT, signal, TransferState } from '@angular/core';
 import { Articles, ArticlesService } from './articles.service';
 import { pendingUntilEvent, toSignal } from '@angular/core/rxjs-interop';
 import { isPlatformBrowser } from '@angular/common';
@@ -15,10 +15,22 @@ const ARTICLES_KEY = makeStateKey<Articles[]>('articles')
 export class ArticlesComponent {
   private platformId = inject(PLATFORM_ID)
   private articlesService = inject(ArticlesService)
-  // private request = inject(REQUEST)
-  // private responseInit = inject(RESPONSE_INIT)
+  private request = inject(REQUEST)
+  private responseInit = inject(RESPONSE_INIT)
+  private reqContext = inject<{
+    isAdmin: boolean
+  } | null>(REQUEST_CONTEXT)
   private pendingTasks = inject(PendingTasks)
   private transferState = inject(TransferState)
+
+  constructor() {
+     console.log(this.reqContext?.isAdmin)
+    if (this.responseInit) {
+      this.responseInit.headers = {
+        'Cache-Control': 'max-age=3600'
+      }
+    }
+  }
   
   articles = toSignal(this.articlesService.getFetchAll().pipe(
     pendingUntilEvent()
