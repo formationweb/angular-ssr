@@ -2,7 +2,7 @@ import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResp
 import express, { Response as ExpressResponse } from 'express'
 import { join } from 'node:path'
 import cors from 'cors'
-import { myMiddleware } from './server/middlewares/my-middleware'
+import { antiBot } from './server/middlewares/anti-bot'
 
 const app = express()
 const angularApp = new AngularNodeAppEngine()
@@ -10,7 +10,7 @@ const angularApp = new AngularNodeAppEngine()
 const browserDistFolder = join(import.meta.dirname, '..', 'browser')
 
 app.use(cors())
-app.use(myMiddleware)
+app.use(antiBot)
 
 app.use(express.static(browserDistFolder))
 
