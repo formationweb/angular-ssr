@@ -6,6 +6,7 @@ import { authGuard } from './core/auth.guard';
 import { Article } from './article/article';
 import { NotFound } from './not-found/not-found';
 import { Example } from './test';
+import { Group } from './group/group';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,10 @@ export const routes: Routes = [
     path: 'draw',
     component: Draw,
     canActivate: [authGuard],
+  },
+  {
+    path: 'abgroup',
+    component: Group
   },
   {
     path: '404',
